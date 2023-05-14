@@ -1,5 +1,6 @@
 import MonacoEditor from "@/components/MonacoEditor";
 import { useCallback, useRef, useState } from "react";
+import prettier from "prettier/standalone";
 
 const JsonToTs = () => {
   const transformer = useCallback(async (value: string | undefined) => {
@@ -29,10 +30,19 @@ const JsonToTs = () => {
   const transform = async (value: string | undefined) => {
     try {
       const result = await transformer(value);
-      setText(result);
+      const prettifyResult = await prettify(result);
+      setText(prettifyResult);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const prettify = (value: string) => {
+    return prettier.format(value, {
+      parser: "typescript",
+      plugins: [require("prettier/parser-typescript")],
+      semi: false,
+    });
   };
 
   return (
