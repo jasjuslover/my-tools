@@ -23,6 +23,7 @@ const JsonToTs = () => {
   );
 
   const onChange = (value: string | undefined) => {
+    if (!value) return;
     setRawText(value || "");
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
@@ -62,12 +63,12 @@ const JsonToTs = () => {
   }, [title]);
 
   return (
-    <div>
-      <div className="w-1/2">
+    <main>
+      <div className="block p-5">
         <input
           value={title}
           onChange={onChangeForm}
-          className="border rounded"
+          className="border rounded-md px-3 py-1"
         />
       </div>
       <div className="flex flex-row">
@@ -88,7 +89,7 @@ const JsonToTs = () => {
           />
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
