@@ -1,10 +1,11 @@
-import Editor, { OnChange } from "@monaco-editor/react";
+import Editor, { OnChange, OnMount } from "@monaco-editor/react";
 
 interface MonacoEditorProps {
   defaultLanguage?: string;
   onChange?: OnChange;
   options?: any;
   value?: string;
+  onMount?: OnMount;
 }
 
 const MonacoEditor: React.FC<MonacoEditorProps> = ({
@@ -12,6 +13,7 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
   onChange,
   options,
   value,
+  onMount,
 }: MonacoEditorProps) => {
   return (
     <Editor
@@ -22,6 +24,7 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
       onChange={onChange}
       value={value}
       options={options}
+      onMount={onMount}
     />
   );
 };

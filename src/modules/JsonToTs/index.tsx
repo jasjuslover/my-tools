@@ -71,7 +71,7 @@ const JsonToTs = () => {
           className="border rounded-md px-3 py-1"
         />
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-col md:flex-row">
         <div className="w-full">
           <MonacoEditor
             defaultLanguage="json"
