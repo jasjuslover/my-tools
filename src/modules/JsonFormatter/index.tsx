@@ -1,5 +1,6 @@
 import MonacoEditor from "@/components/MonacoEditor";
 import { useEffect, useRef, useState } from "react";
+import copy from "clipboard-copy";
 
 const JsonFormatter = () => {
   const [rawText, setRawText] = useState<string>("");
@@ -23,6 +24,10 @@ const JsonFormatter = () => {
     editorRef.current = editor;
   };
 
+  const handleCopy = () => {
+    copy(editorRef.current?.getValue() || "");
+  };
+
   useEffect(() => {
     if (text) {
       editorRef.current.updateOptions({ readOnly: false });
@@ -37,6 +42,9 @@ const JsonFormatter = () => {
 
   return (
     <main>
+      <div className="flex flex-row justify-end">
+        <button onClick={handleCopy}>Copy</button>
+      </div>
       <div className="flex flex-col md:flex-row">
         <div className="w-full">
           <MonacoEditor
