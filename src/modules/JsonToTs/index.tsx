@@ -1,12 +1,14 @@
 import MonacoEditor from "@/components/MonacoEditor";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import prettier from "prettier/standalone";
+import copy from "clipboard-copy";
 
 const JsonToTs = () => {
   const [rawText, setRawText] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [title, setTitle] = useState<string>("Root");
   const debounceRef = useRef<any>();
+  const editorRef = useRef<any>();
 
   const transformer = useCallback(
     async (value: string | undefined) => {
@@ -21,6 +23,10 @@ const JsonToTs = () => {
     },
     [title]
   );
+
+  const handleEditorMount = (editor: any, monaco: any) => {
+    editorRef.current = editor;
+  };
 
   const onChange = (value: string | undefined) => {
     if (!value) return;
@@ -56,6 +62,10 @@ const JsonToTs = () => {
     setTitle(e.target.value);
   };
 
+  const handleCopy = () => {
+    copy(editorRef.current?.getValue() || "");
+  };
+
   useEffect(() => {
     if (title) {
       onChange(rawText);
@@ -64,12 +74,13 @@ const JsonToTs = () => {
 
   return (
     <main>
-      <div className="block p-5">
+      <div className="flex flex-row justify-between p-5">
         <input
           value={title}
           onChange={onChangeForm}
           className="border rounded-md px-3 py-1"
         />
+        <button onClick={handleCopy}>Copy</button>
       </div>
       <div className="flex flex-col md:flex-row">
         <div className="w-full">
@@ -83,6 +94,7 @@ const JsonToTs = () => {
           <MonacoEditor
             defaultLanguage="typescript"
             value={text}
+            onMount={handleEditorMount}
             options={{
               readOnly: true,
             }}

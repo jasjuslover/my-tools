@@ -20,7 +20,7 @@ const JsonFormatter = () => {
     }, 800);
   };
 
-  const handleEditorMount = (editor: any, monaco: any) => {
+  const handleEditorMount = (editor: any) => {
     editorRef.current = editor;
   };
 
@@ -42,7 +42,7 @@ const JsonFormatter = () => {
 
   return (
     <main>
-      <div className="flex flex-row justify-end">
+      <div className="flex flex-row justify-end p-5">
         <button onClick={handleCopy}>Copy</button>
       </div>
       <div className="flex flex-col md:flex-row">
